@@ -14,9 +14,14 @@ The player wins when all cards in the game is matched.
 2. Use "npm install" to install the dependencies.
 3. Run "node index.js" to start the game.
 
+## Limitation
+
+1. Exit game option in between is not yet implemented.
+2. Player cannot select grid size via prompt.
+
 ## Bugs
 
-1. Console would not clear after 5 seconds after the two cards player chosen were displayed.
+1. Console would not clear after 5 seconds after the two cards player chosen were displayed
 
 
 ## Features planned
