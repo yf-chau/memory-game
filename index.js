@@ -16,9 +16,11 @@ while (true) {
 
     displayGrid(grid)
 
-    cardsCoor = chooseCard()
+    card1Coor = chooseCard(1)
 
-    rightPair = showChosenCard(cardsCoor[0], cardsCoor[1])
+    card2Coor = chooseCard(2)
+
+    rightPair = showChosenCard(card1Coor, card2Coor)
 
 }
 
@@ -71,29 +73,43 @@ function displayGrid(grid) {
 
 }
 
-function chooseCard() {
-    card1 = Number(prompt(`Choose the first card:`))
+function chooseCard(cardNum) {
 
-    card1Coor = convertCoor(card1)    
+    while (true) {
 
-    console.log ("Card1row: ", card1Coor[0])
-    console.log ("Card1col: ", card1Coor[1])
+        card = Number(prompt(`Choose the ${cardNum === 1 ? "first" : "second"} card:`))
 
-    card2 = Number(prompt("Choose the second card:"))
+        cardCoor = convertCoor(card)  
+        
+        if (grid[cardCoor[0]][cardCoor[1]] === "#") {
+            console.log ("Input invalid, please try again.")
+        } else {
+            return cardCoor
+        }
 
-    card2Coor = convertCoor(card2)    
+    // console.log ("Card1row: ", card1Coor[0])
+    // console.log ("Card1col: ", card1Coor[1])
+    }
+    // card1 = Number(prompt(`Choose the first card:`))
 
-    console.log ("Card2row: ", card2Coor[0])
-    console.log ("Card2col: ", card2Coor[1])
+    // card1Coor = convertCoor(card1)    
 
-    return [card1Coor, card2Coor]
+    // console.log ("Card1row: ", card1Coor[0])
+    // console.log ("Card1col: ", card1Coor[1])
+
+    // card2 = Number(prompt("Choose the second card:"))
+
+    // card2Coor = convertCoor(card2)    
+
+    // console.log ("Card2row: ", card2Coor[0])
+    // console.log ("Card2col: ", card2Coor[1])
+
+    // return [card1Coor, card2Coor]
 }
 
 function showChosenCard(card1Coor, card2Coor) {
 
     let counter = 1
-
-    console.log(card1Coor, card2Coor)
 
     for (let i = 0; i < grid.length; i++) {
         let row = `   `;
