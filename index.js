@@ -8,23 +8,58 @@ let grid = [] // A nested array containing the cards
 //Main program
 
 console.clear()
-
 gameSetup(grid, gridSize);
 
-while (true) {
+console.log(`Memory card game\n`)
 
-    displayGrid(grid)
+runGame()
 
-    card1Coor = chooseCard(1)
+console.log("Congratulations! You win!")
 
-    card2Coor = chooseCard(2)
+///////////////////////////////////
 
-    rightPair = showChosenCard(card1Coor, card2Coor)
+function runGame() {
 
-    setTimeout(() => { console.clear() }, 5000)
+    while (!checkWin()) {
 
+        displayGrid(grid)
+        let samePair = true
+
+        while (samePair) {
+            card1Coor = chooseCard(1)
+            card2Coor = chooseCard(2)
+
+            if (JSON.stringify(card1Coor) == JSON.stringify(card2Coor)) {
+                console.log("Input is the same. Try again.")
+            } else {
+                samePair = false
+            }
+        }
+
+        rightPair = showChosenCard(card1Coor, card2Coor)
+        completed = checkWin();
+
+        if (!checkWin()) {
+            setTimeout(() => {
+                console.clear()
+                runGame()
+            }, 5000);
+        }
+    }
 }
 
+
+
+function checkWin() {
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            if (grid[i][j] !== "#") {
+                return false
+            }
+        }
+    }
+    return true
+}
 
 function convertCoor(cardNumber) {
 
@@ -66,22 +101,17 @@ function displayGrid(grid) {
             } else {
                 row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
             }
-
             counter++
         }
         console.log(row);
     }
-
+    console.log()
 }
 
 function chooseCard(cardNum) {
 
     while (true) {
         const card = Number(prompt(`Choose the ${cardNum === 1 ? "first" : "second"} card:`))
-
-        console.log(card)
-
-        console.log(isNaN(card))
 
         if (isNaN(card)) {
             console.log("Input is not an integer, please try again.")
@@ -107,6 +137,8 @@ function chooseCard(cardNum) {
 
 function showChosenCard(card1Coor, card2Coor) {
 
+    console.log()
+
     let counter = 1
 
     for (let i = 0; i < grid.length; i++) {
@@ -115,10 +147,10 @@ function showChosenCard(card1Coor, card2Coor) {
 
             if ((i === card1Coor[0] && j === card1Coor[1]) || (i === card2Coor[0] && j === card2Coor[1])) {
                 row += ` ${' ' + grid[i][j]} `;
-                // } else if (counter === cards[1]) {
-                //     row += ` ${' ' + grid[i][j]} `;
-                // } else if (grid[i][j] === "#") {
-                //     row += ` ${' #'} `
+
+            } else if (grid[i][j] === "#") {
+                row += ` ${' #'} `
+                
             } else {
                 row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
             }
@@ -126,7 +158,7 @@ function showChosenCard(card1Coor, card2Coor) {
         }
         console.log(row);
     }
-
+    console.log()
     if (grid[card1Coor[0]][card1Coor[1]] === grid[card2Coor[0]][card2Coor[1]]) {
 
         console.log("Your are right!")
@@ -136,4 +168,10 @@ function showChosenCard(card1Coor, card2Coor) {
     } else {
         console.log("Your are wrong! Try again.")
     }
+
+    console.log()
+
+    // setTimeout(() => {
+    //     console.clear();
+    // }, 5000);
 }
