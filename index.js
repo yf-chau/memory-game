@@ -4,11 +4,10 @@ const c = require("ansi-color")
 const gridSize = 3 //6*7 = 42 which is the max
 
 let grid = [] // A nested array containing the cards
-let cardsCoor = []
-let rightPair = false
-
 
 //Main program
+
+console.clear()
 
 gameSetup(grid, gridSize);
 
@@ -22,14 +21,16 @@ while (true) {
 
     rightPair = showChosenCard(card1Coor, card2Coor)
 
+    setTimeout(() => { console.clear() }, 5000)
+
 }
 
 
-function convertCoor (cardNumber) {
+function convertCoor(cardNumber) {
 
     cardRow = Math.floor((cardNumber - 1) / (gridSize + 1))
 
-    cardCol = ((cardNumber -1) % (gridSize + 1))
+    cardCol = ((cardNumber - 1) % (gridSize + 1))
 
     return [cardRow, cardCol]
 }
@@ -76,35 +77,32 @@ function displayGrid(grid) {
 function chooseCard(cardNum) {
 
     while (true) {
+        const card = Number(prompt(`Choose the ${cardNum === 1 ? "first" : "second"} card:`))
 
-        card = Number(prompt(`Choose the ${cardNum === 1 ? "first" : "second"} card:`))
+        console.log(card)
 
-        cardCoor = convertCoor(card)  
-        
-        if (grid[cardCoor[0]][cardCoor[1]] === "#") {
-            console.log ("Input invalid, please try again.")
-        } else {
-            return cardCoor
+        console.log(isNaN(card))
+
+        if (isNaN(card)) {
+            console.log("Input is not an integer, please try again.")
+
+        } else if (card < 1 || card > gridSize * (gridSize + 1)) {
+            console.log("Card number invalid, please try again.")
+
+        } else if (!Number.isInteger(card)) {
+            console.log("Input is not an integer, please try again.")
         }
+        else {
+            cardCoor = convertCoor(card)
 
-    // console.log ("Card1row: ", card1Coor[0])
-    // console.log ("Card1col: ", card1Coor[1])
+            if (grid[cardCoor[0]][cardCoor[1]] === "#") {
+                console.log("Card already matched. Please choose another card.")
+
+            } else {
+                return cardCoor
+            }
+        }
     }
-    // card1 = Number(prompt(`Choose the first card:`))
-
-    // card1Coor = convertCoor(card1)    
-
-    // console.log ("Card1row: ", card1Coor[0])
-    // console.log ("Card1col: ", card1Coor[1])
-
-    // card2 = Number(prompt("Choose the second card:"))
-
-    // card2Coor = convertCoor(card2)    
-
-    // console.log ("Card2row: ", card2Coor[0])
-    // console.log ("Card2col: ", card2Coor[1])
-
-    // return [card1Coor, card2Coor]
 }
 
 function showChosenCard(card1Coor, card2Coor) {
@@ -117,10 +115,10 @@ function showChosenCard(card1Coor, card2Coor) {
 
             if ((i === card1Coor[0] && j === card1Coor[1]) || (i === card2Coor[0] && j === card2Coor[1])) {
                 row += ` ${' ' + grid[i][j]} `;
-            // } else if (counter === cards[1]) {
-            //     row += ` ${' ' + grid[i][j]} `;
-            // } else if (grid[i][j] === "#") {
-            //     row += ` ${' #'} `
+                // } else if (counter === cards[1]) {
+                //     row += ` ${' ' + grid[i][j]} `;
+                // } else if (grid[i][j] === "#") {
+                //     row += ` ${' #'} `
             } else {
                 row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
             }
@@ -128,9 +126,6 @@ function showChosenCard(card1Coor, card2Coor) {
         }
         console.log(row);
     }
-
-    console.log()
-    console.log(card1Coor, card2Coor)
 
     if (grid[card1Coor[0]][card1Coor[1]] === grid[card2Coor[0]][card2Coor[1]]) {
 
@@ -141,20 +136,4 @@ function showChosenCard(card1Coor, card2Coor) {
     } else {
         console.log("Your are wrong! Try again.")
     }
-
-    //return card1 === card2
-    // setTimeout(() => { console.clear() }, 5000)
 }
-
-// function updateGrid(cards) {
-//     let counter = 1
-
-//     for (let i = 0; i < grid.length; i++) {
-//         for (let j = 0; j < grid[i].length; j++) {
-//             if (counter === cards[0] || counter === cards[1]) {
-//                 grid[i][j] = "#"
-//             }
-//             counter++
-//         }
-//     }
-// }
