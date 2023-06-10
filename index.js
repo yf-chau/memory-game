@@ -1,54 +1,53 @@
 const prompt = require("prompt-sync")()
 const c = require("ansi-color")
 
-const gridSize = 3 //6*7 = 42 which is the max
+const gridSize = 3 //6 is the max
 
 let grid = [] // A nested array containing the cards
 
+const clearScreen = () => {
+    process.stdout.write("\u001b[2J\u001b[0;0H");
+  };
+
 //Main program
 
-console.clear()
-gameSetup(grid, gridSize);
+clearScreen();
 
-console.log(`Memory card game\n`)
+gameSetup(grid, gridSize);
 
 runGame()
 
-console.log("Congratulations! You win!")
+
 
 ///////////////////////////////////
 
 function runGame() {
 
-    while (!checkWin()) {
+    displayGrid(grid)
+    let samePair = true
 
-        displayGrid(grid)
-        let samePair = true
+    while (samePair) {
+        card1Coor = chooseCard(1)
+        card2Coor = chooseCard(2)
 
-        while (samePair) {
-            card1Coor = chooseCard(1)
-            card2Coor = chooseCard(2)
-
-            if (JSON.stringify(card1Coor) == JSON.stringify(card2Coor)) {
-                console.log("Input is the same. Try again.")
-            } else {
-                samePair = false
-            }
-        }
-
-        rightPair = showChosenCard(card1Coor, card2Coor)
-        completed = checkWin();
-
-        if (!checkWin()) {
-            setTimeout(() => {
-                console.clear()
-                runGame()
-            }, 5000);
+        if (JSON.stringify(card1Coor) == JSON.stringify(card2Coor)) {
+            console.log("Input is the same. Try again.")
+        } else {
+            samePair = false
         }
     }
+
+    rightPair = showChosenCard(card1Coor, card2Coor)
+
+    if (!checkWin()) {
+        setTimeout(() => {
+            console.clear()
+            runGame()
+        }, 3000);
+    } else {
+        console.log("Congratulations! You win!")
+    }
 }
-
-
 
 function checkWin() {
     for (let i = 0; i < grid.length; i++) {
@@ -90,6 +89,7 @@ function gameSetup(grid, gridSize) {
 
 function displayGrid(grid) {
 
+    console.log(`\nMemory card game\n`)
     let counter = 1
 
     for (let i = 0; i < grid.length; i++) {
@@ -150,7 +150,7 @@ function showChosenCard(card1Coor, card2Coor) {
 
             } else if (grid[i][j] === "#") {
                 row += ` ${' #'} `
-                
+
             } else {
                 row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
             }
