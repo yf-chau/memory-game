@@ -1,5 +1,5 @@
 const prompt = require("prompt-sync")()
-const c = require("ansi-color")
+const c = require("ansi-colors")
 
 const gridSize = 3 //6 is the max
 
@@ -45,7 +45,7 @@ function runGame() {
             runGame()
         }, 3000);
     } else {
-        console.log("Congratulations! You win!")
+        console.log(c.yellow("Congratulations! You win!"))
     }
 }
 
@@ -97,9 +97,9 @@ function displayGrid(grid) {
         for (let j = 0; j < grid[i].length; j++) {
 
             if (grid[i][j] === "#") {
-                row += ` ${' #'} `
+                row += ` ${c.green(' #')} `
             } else {
-                row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
+                row += ` ${c.cyan(counter.toString().length === 1 ? ' ' + counter : counter)} `;
             }
             counter++
         }
@@ -146,13 +146,13 @@ function showChosenCard(card1Coor, card2Coor) {
         for (let j = 0; j < grid[i].length; j++) {
 
             if ((i === card1Coor[0] && j === card1Coor[1]) || (i === card2Coor[0] && j === card2Coor[1])) {
-                row += ` ${' ' + grid[i][j]} `;
+                row += ` ${c.yellow(' ' + grid[i][j])} `;
 
             } else if (grid[i][j] === "#") {
-                row += ` ${' #'} `
+                row += ` ${c.green(' #')} `
 
             } else {
-                row += ` ${counter.toString().length === 1 ? ' ' + counter : counter} `;
+                row += ` ${c.cyan(counter.toString().length === 1 ? ' ' + counter : counter)} `;
             }
             counter++
         }

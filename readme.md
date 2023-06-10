@@ -19,7 +19,3 @@ The player wins when all cards in the game is matched.
 1. Exit game option in between is not yet implemented.
 2. Player cannot not yet select grid size via prompt.
 
-## Features planned
-
-1. Use different colors to represent selectable and non-selectable cards.
-2. Use different colors for game messages.
