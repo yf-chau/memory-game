@@ -17,5 +17,4 @@ The player wins when all cards in the game is matched.
 ## Limitation
 
 1. Exit game option in between is not yet implemented.
-2. Player cannot not yet select grid size via prompt.
 
