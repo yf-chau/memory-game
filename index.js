@@ -1,7 +1,12 @@
 const prompt = require("prompt-sync")()
 const c = require("ansi-colors")
+let gridSize = 0
 
-const gridSize = 3 //6 is the max
+gridSize = Number(prompt(`Please choose a grid size from 2 to 6:`))
+
+while (gridSize < 2 || gridSize > 6 || !Number.isInteger(gridSize)) {
+    gridSize = Number(prompt(`Grid size must be an integer between 2 and 6. Please try again:`))
+}
 
 let grid = [] // A nested array containing the cards
 
@@ -16,8 +21,6 @@ clearScreen();
 gameSetup(grid, gridSize);
 
 runGame()
-
-
 
 ///////////////////////////////////
 
